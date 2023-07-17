@@ -30,4 +30,15 @@ export class BoardsService {
     deleteBoard(id: string): void {
         this.boards = this.boards.filter((board) => board.id != id);
     }
+
+    updateBoard(id: string, status: BoardStatus): Board {
+        const board = this.getBoard(id);
+
+        // 강의에 없었던 조건문 추가 (Patch 메소드 특성 고려)
+        if (status != null) {
+            board.status = status;
+        }
+
+        return board;
+    }
 }
