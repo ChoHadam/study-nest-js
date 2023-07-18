@@ -6,10 +6,13 @@ import {
     Delete,
     Param,
     Patch,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
 import { Board, BoardStatus } from './boards.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDTO } from './DTO/create-board.dto';
+import {} from 'class-validator';
 
 @Controller('boards')
 export class BoardsController {
@@ -26,6 +29,12 @@ export class BoardsController {
     }
 
     @Post()
+    /**
+     * A pipe is a class annotated with the @Injectable() decorator, which implements the PipeTransform interface.
+     * Pipes have two typical use cases: data transformation & data validation
+     * https://docs.nestjs.com/pipes
+     */
+    @UsePipes(ValidationPipe) // one of the nestJS built-in pipes
     createBoard(@Body() createBoardDTO: CreateBoardDTO) {
         return this.boardService.createBoard(createBoardDTO);
     }
